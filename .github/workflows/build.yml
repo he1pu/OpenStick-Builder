@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v4
@@ -13,7 +13,10 @@ jobs:
           submodules: true
 
       - name: Install dependencies
-        run: sudo sh -e scripts/install_deps.sh
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y debian-archive-keyring
+          sudo sh -e scripts/install_deps.sh
 
       - name: Build hyp and aboot firmware
         run: sudo sh -e scripts/build_hyp_aboot.sh
